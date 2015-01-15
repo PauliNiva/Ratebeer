@@ -5,11 +5,14 @@ class BreweriesController < ApplicationController
   # GET /breweries.json
   def index
     @breweries = Brewery.all
+    render :index    # renderöi hakemistosta view/breweries olevan näkymätemplaten index.html.erb
   end
 
   # GET /breweries/1
   # GET /breweries/1.json
   def show
+    @brewery = Brewery.find(params[:id])
+    render :show
   end
 
   # GET /breweries/new
