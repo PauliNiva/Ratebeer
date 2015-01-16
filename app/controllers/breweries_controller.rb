@@ -5,7 +5,7 @@ class BreweriesController < ApplicationController
   # GET /breweries.json
   def index
     @breweries = Brewery.all
-    render :panimot
+    render :index    # renderöi hakemistosta view/breweries olevan näkymätemplaten index.html.erb
   end
 
   # GET /breweries/1
