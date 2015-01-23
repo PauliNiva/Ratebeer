@@ -2,8 +2,8 @@ class Rating < ActiveRecord::Base
   belongs_to :beer
 
   def to_s
-    oluen_nimi = self.beer.name
-    reittaus = self.score
-    "#{oluen_nimi} #{reittaus}"
+    beer_name = self.beer.name
+    rating = self.score
+    "#{beer_name} #{rating}"
   end
 end
