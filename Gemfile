@@ -5,12 +5,14 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0'
 group :development, :test do
   gem 'sqlite3'
+  gem 'better_errors'
 end
 
 group :production do
   gem 'pg'
   gem 'rails_12factor'
 end
+
 ruby '2.2.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
