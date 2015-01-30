@@ -1,7 +1,7 @@
 class RatingsController < ApplicationController
   def index
     @ratings = Rating.all
-    render :index    # renderöi hakemistosta views/ratings olevan näkymätemplaten index.html.erb
+    render :index    # render view template index.html.erb from directory views/ratings
   end
 
   def new
@@ -11,6 +11,10 @@ class RatingsController < ApplicationController
 
   def create
     Rating.create params.require(:rating).permit(:score, :beer_id)
+
+    # save created rating to session
+    session[:last_rating] = "#{rating.beer.name} #{rating.score} points"
+
     redirect_to ratings_path
   end
 
