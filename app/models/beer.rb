@@ -1,8 +1,9 @@
 class Beer < ActiveRecord::Base
+  include RatingAverage
   belongs_to :brewery
   has_many :ratings, dependent: :destroy
 
-  include RatingAverage
+  validates :name, presence: true, allow_blank: false
 
   def average
     return 0 if ratings.empty?
