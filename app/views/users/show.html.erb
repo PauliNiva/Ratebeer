@@ -19,5 +19,19 @@
 <% end %>
 </p>
 
+<p>
+  <% if @user.memberships.empty? %>
+      has no memberships
+  <% else %>
+      <%= "Has #{pluralize(@user.memberships.count, 'membership')}" %>
+    <h2>memberships</h2>
+    <ul>
+      <% @user.beer_clubs.each do |beerclub| %>
+          <li> <%= beerclub.to_s %></li>
+      <% end %>
+    </ul>
+<% end %>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
