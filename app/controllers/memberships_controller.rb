@@ -33,6 +33,7 @@ class MembershipsController < ApplicationController
         format.html { redirect_to user_path current_user, notice: 'Membership was successfully created.' }
         format.json { render :show, status: :created, location: @membership }
       else
+        @beerclubs = BeerClub.all
         format.html { render :new }
         format.json { render json: @membership.errors, status: :unprocessable_entity }
       end

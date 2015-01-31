@@ -1,9 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Username:</strong>
+<h2>
   <%= @user.username %>
-</p>
+</h2>
 
 <p>
   <% if @user.ratings.empty? %>
@@ -27,7 +26,7 @@
     <h2>memberships</h2>
     <ul>
       <% @user.beer_clubs.each do |beerclub| %>
-          <li> <%= beerclub.to_s %></li>
+          <li> <%= link_to beerclub.to_s, beer_club_path(beerclub) %></li>
       <% end %>
     </ul>
 <% end %>
