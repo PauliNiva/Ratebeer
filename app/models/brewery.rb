@@ -10,6 +10,8 @@ class Brewery < ActiveRecord::Base
 
   validate :year_not_in_future
 
+  validates :name, presence: true, allow_blank: false
+
   def year_not_in_future
     if year.present? && year > Time.now.year
       errors.add(:year, "year cannot be in the future")
