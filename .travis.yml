@@ -13,3 +13,4 @@ deploy:
   app: bissearvostelija
   on:
     repo: PauliNiva/Ratebeer
+  run: "rake db:migrate"
