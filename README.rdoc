@@ -1,3 +1,0 @@
-Tämä on Helsingin yliopiston kevään 2015 Web-palvelinohjelmointi Ruby on Rails -kurssilla tehtävä sovellus.
-
-Linkki sovelluksen Heroku-instanssiin: https://bissearvostelija.herokuapp.com
