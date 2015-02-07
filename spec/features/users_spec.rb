@@ -33,16 +33,35 @@ describe "User" do
 describe "who has made ratings" do
   it "has his ratings on the user page" do
     user = User.first
-    brewery = FactoryGirl.create :brewery, name:"BrewDog"
-    beer1 = FactoryGirl.create :beer, name:"Nanny State", brewery:brewery
-    beer2 = FactoryGirl.create :beer, name:"Punk IPA", brewery:brewery
-    FactoryGirl.create :rating, beer:beer1, user:user
-    FactoryGirl.create :rating, beer:beer2, user:user
+    create_beers_and_ratings
     visit user_path(user)
 
     expect(page).to have_content('Has made 2 ratings')
-    expect(page).to have_content('Nanny State')
-    expect(page).to have_content('Punk IPA')
+    expect(page).to have_content('iso3')
+    expect(page).to have_content('Karhu')
+  end
+
+  it "has favorite style" do
+    create_beers_and_ratings
+    user1 = User.first
+    visit user_path(user1)
+    expect(page).to have_content('Favorite beer style is Lager')
+  end
+
+  it "has favorite brewery" do
+    create_beers_and_ratings
+    user = User.first
+    visit user_path(user)
+    expect(page).to have_content('favorite brewery is Koff')
     end
   end
+end
+
+def create_beers_and_ratings
+  user = User.first
+  brewery = FactoryGirl.create :brewery, name:"Koff"
+  beer1 = FactoryGirl.create :beer, name:"iso3", brewery:brewery
+  beer2 = FactoryGirl.create :beer, name:"Karhu", brewery:brewery
+  FactoryGirl.create :rating, beer:beer1, user:user
+  FactoryGirl.create :rating, beer:beer2, user:user
 end
