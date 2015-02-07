@@ -32,4 +32,13 @@ describe "Rating" do
     visit ratings_path
     expect(page).to have_content('Number of ratings: 2')
   end
+
+  it "is removed from database when a user deletes it" do
+    FactoryGirl.create(:rating, beer:beer1, user:user)
+    visit user_path(user)
+
+    expect(page).to have_content('iso3')
+    expect(Rating.count).to eq(1)
+    expect{ click_link('delete') }.to change{Rating.count}.from(1).to(0)
+  end
 end

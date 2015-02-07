@@ -10,7 +10,7 @@
   <% else %>
       <%= "Has made #{pluralize(@user.ratings.count, 'rating')}, average #{@user.average_rating}" %>
     <p>Favorite beer style is <strong><%= @user.favorite_style %></strong>
-      and brewery <strong><%= @user.favorite_brewery %></strong></p>
+      and favorite brewery is <strong><%= link_to @user.favorite_brewery.name, @user.favorite_brewery %></p>
 
     <h2>ratings</h2>
     <ul>
