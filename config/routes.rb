@@ -13,6 +13,9 @@ Rails.application.routes.draw do
 
   resource :session, only: [:new, :create, :delete]
 
+  get 'places', to: 'places#index'
+  post 'places', to:'places#search'
+
   root 'breweries#index'
 
   get 'signup', to: 'users#new'
