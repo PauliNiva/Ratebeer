@@ -7,6 +7,8 @@ class Beer < ActiveRecord::Base
 
   validates :name, presence: true, allow_blank: false
 
+  validates :style, presence: true
+
   def average
     return 0 if ratings.empty?
     ratings.map{ |r| r.score }.sum / ratings.count.to_f
