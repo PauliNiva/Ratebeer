@@ -12,6 +12,13 @@ class Brewery < ActiveRecord::Base
 
   validates :name, presence: true, allow_blank: false
 
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil,false] }
+
+  def self.top(n)
+    all.sort_by{ |b| -(b.average_rating||0) }.take(n)
+  end
+
   def year_not_in_future
     if year.present? && year > Time.now.year
       errors.add(:year, "year cannot be in the future")

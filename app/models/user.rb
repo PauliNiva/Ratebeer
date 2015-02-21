@@ -30,4 +30,7 @@ class User < ActiveRecord::Base
     beers.group(:brewery).average(:score).max_by { |name, score| score }.first
   end
 
+  def self.most_active_raters(n)
+    all.sort_by{ |u| -(u.ratings.count||0)}.first(n)
+  end
 end

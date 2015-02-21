@@ -1,7 +1,10 @@
 class RatingsController < ApplicationController
   def index
-    @ratings = Rating.all
-    render :index    # render view template index.html.erb from directory views/ratings
+    @recent = Rating.recent.take 5
+    @topBeers = Beer.top 3
+    @topBreweries = Brewery.top 3
+    @topStyles = Style.top 3
+    @mostActiveRaters = User.most_active_raters 3
   end
 
   def new
