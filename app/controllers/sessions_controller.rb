@@ -5,11 +5,13 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by username: params[:username]
-    if user && user.authenticate(params[:password])
+    if user && user.disabled
+      redirect_to :back, notice: "your account is disabled, please contact an administrator."
+    elsif user && user.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to user_path(user), notice: "Welcome back!"
     else
-      redirect_to :back, notice: "Username and/or password mismatch"
+      redirect_to :back, notice: "Username and/or password mismatch."
     end
   end
 
