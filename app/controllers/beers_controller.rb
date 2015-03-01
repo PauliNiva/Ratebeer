@@ -1,6 +1,6 @@
 class BeersController < ApplicationController
   before_action :set_beer, only: [:show, :edit, :update, :destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list, :nglist]
   before_action :has_admin_role, only: [:destroy]
 
 # GET /beers
@@ -15,6 +15,13 @@ class BeersController < ApplicationController
                when 'style' then @beers.sort_by{ |b| b.style.name.downcase }
              end
   end
+
+  def list
+  end
+
+  def nglist
+  end
+
 # GET /beers/1
 # GET /beers/1.json
   def show
