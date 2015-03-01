@@ -34,9 +34,16 @@
       has no memberships
   <% else %>
       <%= "Has #{pluralize(@user.memberships.count, 'membership')}" %>
-    <h2>memberships</h2>
+    <h2>member of</h2>
     <ul>
-      <% @user.beer_clubs.each do |beerclub| %>
+      <% @user.confirmed_in.each do |beerclub| %>
+          <li> <%= link_to beerclub.to_s, beer_club_path(beerclub) %></li>
+      <% end %>
+    </ul>
+
+    <h2>applied membership of</h2>
+    <ul>
+      <% @user.applicant_in.each do |beerclub| %>
           <li> <%= link_to beerclub.to_s, beer_club_path(beerclub) %></li>
       <% end %>
     </ul>

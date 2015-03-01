@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  before_action :set_membership, only: [:show, :edit, :update]
+  before_action :set_membership, only: [:show, :edit, :update, :confirm_member]
 
   # GET /memberships
   # GET /memberships.json
@@ -63,6 +63,15 @@ class MembershipsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to user_path(current_user), notice: "Membership in #{BeerClub.find_by(id: @membership.beer_club_id).name} has been terminated" }
       format.json { head :no_content }
+    end
+  end
+
+  def confirm_member
+    @beerclub = BeerClub.find(@membership.beer_club_id)
+    if @beerclub.is_member?(current_user)
+      @membership.confirmed = true
+      @membership.save
+      redirect_to :back, notice: 'membership confirmed'
     end
   end
 

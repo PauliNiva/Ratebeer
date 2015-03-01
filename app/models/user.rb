@@ -33,4 +33,12 @@ class User < ActiveRecord::Base
   def self.most_active_raters(n)
     all.sort_by{ |u| -(u.ratings.count||0)}.first(n)
   end
+
+  def confirmed_in
+    memberships.is_confirmed.collect { |m| m.beer_club }
+  end
+
+  def applicant_in
+    memberships.is_applicant.collect { |m| m.beer_club }
+  end
 end
