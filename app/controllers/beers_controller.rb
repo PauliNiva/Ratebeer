@@ -10,9 +10,9 @@ class BeersController < ApplicationController
     order = params[:order] || 'name'
 
     @beers = case order
-               when 'name' then @beers.sort_by{ |b| b.name }
-               when 'brewery' then @beers.sort_by{ |b| b.brewery.name }
-               when 'style' then @beers.sort_by{ |b| b.style.name }
+               when 'name' then @beers.sort_by{ |b| b.name.downcase }
+               when 'brewery' then @beers.sort_by{ |b| b.brewery.name.downcase }
+               when 'style' then @beers.sort_by{ |b| b.style.name.downcase }
              end
   end
 # GET /beers/1
