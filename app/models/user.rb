@@ -35,10 +35,10 @@ class User < ActiveRecord::Base
   end
 
   def confirmed_in
-    memberships.is_confirmed.collect { |m| m.beer_club }
+    memberships.is_confirmed.collect { |m| m.beer_club }.compact
   end
 
   def applicant_in
-    memberships.is_applicant.collect { |m| m.beer_club }
+    memberships.is_applicant.collect { |m| m.beer_club }.compact
   end
 end
