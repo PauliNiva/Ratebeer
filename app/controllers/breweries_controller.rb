@@ -101,7 +101,7 @@ class BreweriesController < ApplicationController
     @order = params[:order] || 'name'
     return render :index if fragment_exist?( "breweries-#{@order}" )
   end
-  
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
