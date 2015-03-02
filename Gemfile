@@ -77,3 +77,5 @@ group :development do
   gem 'rack-mini-profiler'
 end
 
+gem 'omniauth-github'
+

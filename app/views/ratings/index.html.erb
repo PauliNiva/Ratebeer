@@ -1,5 +1,5 @@
 <h2>Rating statistics</h2>
-
+<% cache "ratings", :expires_in => 10.minutes, skip_digest: true do %>
 <div class="row">
 <div class="col-md-4">
   <h3>Best beers</h3>
@@ -50,4 +50,5 @@
       <li> <%= rating.to_s %> <%= link_to rating.user.username, rating.user %></li>
   <% end %>
 </ul>
+    <% end %>
 <%= link_to 'New Rating', new_rating_path, class:'btn btn-primary' if current_user%>

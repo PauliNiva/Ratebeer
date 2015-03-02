@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   include RatingAverage
   validates :username, uniqueness: true,
-                      length: { in: 3..15 }
+                      length: { in: 3..20 }
   has_many :ratings, dependent: :destroy   # user has many ratings
   has_many :beers, through: :ratings
   has_many :beer_clubs, through: :memberships
@@ -14,6 +14,18 @@ class User < ActiveRecord::Base
                      }
   validates_format_of :password, with: /(?=.*[A-ZÅÄÖ])/, message: "Password must contain at least one capital letter"
   validates_format_of :password, with: /(?=.*[\d])/, message: "Password must contain at least one numerical digit"
+
+
+  def self.github(info)
+    user = User.find_by username:info.nickname
+    if user.nil?
+      password = SecureRandom.base64
+      user = User.create!(username: info.nickname,
+                          password: password,
+                          password_confirmation: password)
+    end
+    user
+  end
 
   def favorite_beer
     return nil if ratings.empty?

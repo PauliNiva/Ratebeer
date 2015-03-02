@@ -1,4 +1,6 @@
 class RatingsController < ApplicationController
+  before_action :skip_if_cached, only:[:index]
+
   def index
     @recent = Rating.recent.take 5
     @topBeers = Beer.top 3
@@ -31,5 +33,9 @@ class RatingsController < ApplicationController
     rating.delete if current_user == rating.user
     redirect_to :back
     end
+  end
+
+  def skip_if_cached
+    return render :index if fragment_exist?("ratings")
   end
 end

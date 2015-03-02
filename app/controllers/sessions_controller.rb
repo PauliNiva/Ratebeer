@@ -21,4 +21,22 @@ class SessionsController < ApplicationController
     # redirect application to main page
     redirect_to :root
   end
+
+  def create_oauth
+    user = User.github(env['omniauth.auth'].info)
+    if user
+      login user
+    else
+      redirect_to :back, alert: "sign in using Github failed"
+    end
+  end
+
+  def login(user)
+    if user.disabled
+      redirect_to :back, notice: "Your account is disabled, please contact an administrator"
+    else
+      session[:user_id] = user.id
+      redirect_to user, notice: "Welcome back!"
+    end
+  end
 end
