@@ -9,13 +9,12 @@ class BreweriesController < ApplicationController
     @breweries = Brewery.all
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
-    order = params[:order] || 'name'
     if session[:sort] && session[:sort] == 1
       session[:sort] = -1
     else
       session[:sort] = 1
     end
-    case order
+    case @order
       when 'name' then
         @active_breweries = @active_breweries.sort_by { |b| b.name.downcase }
         @retired_breweries = @retired_breweries.sort_by { |b| b.name.downcase }
@@ -51,8 +50,8 @@ class BreweriesController < ApplicationController
   # POST /breweries
   # POST /breweries.json
   def create
+    ["breweries-name", "breweries-year"].each{ |f| expire_fragment(f) }
     @brewery = Brewery.new(brewery_params)
-
     respond_to do |format|
       if @brewery.save
         format.html { redirect_to @brewery, notice: 'Brewery was successfully created.' }
@@ -67,6 +66,7 @@ class BreweriesController < ApplicationController
   # PATCH/PUT /breweries/1
   # PATCH/PUT /breweries/1.json
   def update
+    ["breweries-name", "breweries-year"].each{ |f| expire_fragment(f) }
     respond_to do |format|
       if @brewery.update(brewery_params)
         format.html { redirect_to @brewery, notice: 'Brewery was successfully updated.' }
@@ -82,6 +82,7 @@ class BreweriesController < ApplicationController
   # DELETE /breweries/1.json
   def destroy
     @brewery.destroy
+    ["breweries-name", "breweries-year"].each{ |f| expire_fragment(f) }
     respond_to do |format|
       format.html { redirect_to breweries_url, notice: 'Brewery was successfully destroyed.' }
       format.json { head :no_content }
@@ -89,12 +90,18 @@ class BreweriesController < ApplicationController
   end
 
   def toggle_activity
+    ["breweries-name", "breweries-year"].each{ |f| expire_fragment(f) }
     brewery = Brewery.find(params[:id])
     brewery.update_attribute :active, (not brewery.active)
     new_status = brewery.active? ? "active" : "retired"
     redirect_to :back, notice:"brewery activity status changed to #{new_status}"
   end
 
+  def skip_if_cached
+    @order = params[:order] || 'name'
+    return render :index if fragment_exist?( "breweries-#{@order}" )
+  end
+  
   private
 
     # Use callbacks to share common setup or constraints between actions.
